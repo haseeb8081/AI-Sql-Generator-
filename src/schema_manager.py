@@ -6,12 +6,27 @@ class SchemaManager:
     """Handles database schema extraction and query execution."""
     
     def __init__(self, config_path: str = "config.yaml"):
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
+        import os
+        from src.init_db import init_db
         
-        self.connection_string = self.config['database'].get('connection_string')
-        if not self.connection_string:
-            raise ValueError("Database connection string not found in config.")
+        # Load config or use defaults
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                self.config = yaml.safe_load(f)
+        else:
+            self.config = {
+                'database': {'connection_string': "sqlite:///data/my_database.db"},
+                'llm': {'provider': 'groq'}
+            }
+        
+        self.connection_string = self.config['database'].get('connection_string', "sqlite:///data/my_database.db")
+        
+        # Auto-init if it's default SQLite and missing
+        if self.connection_string.startswith("sqlite:///"):
+            db_file = self.connection_string.replace("sqlite:///", "")
+            if not os.path.exists(db_file):
+                os.makedirs(os.path.dirname(db_file), exist_ok=True)
+                init_db() # Call our init script
         
         self.engine = create_engine(self.connection_string)
 
