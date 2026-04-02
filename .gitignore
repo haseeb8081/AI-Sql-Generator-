@@ -1,0 +1,14 @@
+# Ignore database files
+data/*.db
+data/my_database.db
+
+# Virtual environments
+.env
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Local models
+*.bin
+*.gguf

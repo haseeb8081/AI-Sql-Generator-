@@ -1,0 +1,8 @@
+streamlit
+ctransformers
+sqlalchemy
+pydantic
+pyyaml
+python-dotenv
+pandas
+groq

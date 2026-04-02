@@ -1,0 +1,9 @@
+llm:
+  provider: "groq"
+  model_path: "llama-2-7b-chat.ggmlv3.q4_0.bin"
+  api_key: "YOUR_GROQ_API_KEY_HERE"
+  model: "llama-3.1-8b-instant"
+
+database:
+  connection_string: "sqlite:///data/my_database.db"
+  dialect: "sqlite"
